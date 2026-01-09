@@ -1,16 +1,43 @@
-# React + Vite
+## Etap 1 – Frontend React + konteneryzacja (Docker)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tutaj stworzyłem prosta apkę tylko na froncie. 
 
-Currently, two official plugins are available:
+### Funkcjonalność aplikacji
+- Górny pasek z logo **training-app**
+- Ekran startowy:
+  - przycisk **+**
+  - tekst **add session**
+  - licznik **Succesfull sessions: X**
+- Po rozpoczęciu sesji:
+  - losowana jest liczba kliknięć od **5 do 20**
+  - użytkownik musi kliknąć dokładnie wskazaną liczbę razy
+  - po sukcesie pojawia się komunikat **Success!**
+  - aplikacja wraca do ekranu głównego i zwiększa licznik sesji
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Architektura etapu
+Na tym etapie projekt składa się wyłącznie z warstwy frontendowej:
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+### Konteneryzacja
+skonteneryzowana przy użyciu Dockera.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Proces budowania:
+1. Budowanie aplikacji w obrazie Node.js
+2. Serwowanie statycznych plików przy pomocy **nginx**
+
+Pliki kluczowe:
+- `frontend/Dockerfile`
+
+### Uruchomienie lokalne
+
+```bash
+cd frontend
+npm install
+npm run dev
+
+ ### uruchomienie w dokerze 
+
+cd frontend
+docker build -t training-frontend .
+docker run -p 8081:80 training-frontend  (dałem 8081 bo mam 8080 zajęte)
