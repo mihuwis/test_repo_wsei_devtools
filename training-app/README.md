@@ -39,21 +39,21 @@ training-app/
   docker-compose.yml
 
 
-  ## Uruchomienie projektu
+## Uruchomienie projektu
 
-  docker compose up --build
+docker compose up --build
 
-  Aplikacja będzie dostępna pod adresem:
+Aplikacja będzie dostępna pod adresem:
 
-    - http://localhost:8081
+   - http://localhost:8081
 
-    Zatrzymanie kontenerów
-    docker compose down
+   Zatrzymanie kontenerów
+   docker compose down
 
-    zatrzymanie z usunieciem bazy 
-    docker compose down -v
+   zatrzymanie z usunieciem bazy 
+   docker compose down -v
 
-   ## Testowanie działania 
+## Testowanie działania 
 ```bash
    Status kontenerów 
    docker compose ps
