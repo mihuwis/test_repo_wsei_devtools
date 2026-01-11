@@ -1,16 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function randomTarget() {
-  return Math.floor(Math.random() * (20 - 5 + 1)) + 5; // 5..20
+  return Math.floor(Math.random() * 16) + 5; // 5..20
 }
 
 export default function App() {
-  const [mode, setMode] = useState("home"); // "home" | "session"
+  const [mode, setMode] = useState("home");
   const [target, setTarget] = useState(() => randomTarget());
   const [clicksLeft, setClicksLeft] = useState(target);
   const [successSessions, setSuccessSessions] = useState(0);
 
+  // pobierz licznik z API
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((data) => setSuccessSessions(data.successfulSessions))
+      .catch(() => {
+        // jeśli API nie działa, zostaw 0 (lub pokaż błąd)
+      });
+  }, []);
 
   useEffect(() => {
     setClicksLeft(target);
@@ -22,16 +31,22 @@ export default function App() {
     setMode("session");
   };
 
-  const clickTrain = () => {
-    setClicksLeft((prev) => prev - 1);
-  };
+  const clickTrain = () => setClicksLeft((prev) => prev - 1);
 
-  
   useEffect(() => {
     if (mode === "session" && clicksLeft === 0) {
-      alert("Success!");
-      setSuccessSessions((s) => s + 1);
-      setMode("home");
+      // Zapisz sukces w DB przez API
+      fetch("/api/sessions", { method: "POST" })
+        .then((r) => r.json())
+        .then((data) => {
+          alert("Success!");
+          setSuccessSessions(data.successfulSessions);
+          setMode("home");
+        })
+        .catch(() => {
+          alert("Success! (API error)");
+          setMode("home");
+        });
     }
   }, [clicksLeft, mode]);
 
