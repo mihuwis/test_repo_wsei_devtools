@@ -36,7 +36,7 @@ Struktura repo:
 training-app/
   frontend/
   api/
-  docker-compose.yml
+  docker-compose.yml```
 
 
 ## Uruchomienie projektu
@@ -56,7 +56,7 @@ Aplikacja będzie dostępna pod adresem:
 ## Testowanie działania 
 ```bash
    Status kontenerów 
-   docker compose ps
+   docker compose ps```
 
 
 Healhchek API 
