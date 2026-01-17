@@ -69,4 +69,22 @@ curl http://localhost:8081/api/health
 Sprawdzenie licznika 
 curl http://localhost:8081/api/stats
 
-Ta linia jest dodana zeby przetestować git hub actions 
+
+## Etap 3 — GitHub Actions (CI)
+
+Projekt został rozbudowany o automatyzację CI przy użyciu GitHub Actions.
+
+Dodano dwa workflow uruchamiane automatycznie przy:
+- push do brancha `github_actions`,
+- pull request do brancha `github_actions`:
+
+1. **CI - Docker build (compose)**  
+   - Weryfikuje poprawność budowania obrazów Docker za pomocą `docker compose build`.
+
+2. **CI - Frontend build**  
+   - Instaluje zależności (`npm ci`) i buduje aplikację (`npm run build`),  
+   - Zapewnia, że kod frontendu zawsze kompiluje się poprawnie w czystym środowisku.
+
+Dzięki temu każdy błąd w Dockerfile, docker-compose lub kodzie frontendu
+jest wykrywany automatycznie przed mergem zmian.
+
