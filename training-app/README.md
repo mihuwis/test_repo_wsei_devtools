@@ -88,3 +88,42 @@ Dodano dwa workflow uruchamiane automatycznie przy:
 Dzięki temu każdy błąd w Dockerfile, docker-compose lub kodzie frontendu
 jest wykrywany automatycznie przed mergem zmian.
 
+
+
+## Etap 4 — Uruchomienie w Kubernetes (Minikube)
+
+### 1) Start lokalnego klastra
+
+```bash
+minikube start --driver=docker
+kubectl get nodes
+```
+
+### 2) Uzycie docker Minikube 
+```bash
+minikube -p minikube docker-env | Invoke-Expression
+```
+
+### 3) Budowa obrazów 
+```bash
+docker build -t training-app-api:latest ./api
+docker build -t training-app-frontend:latest ./frontend
+```
+
+### 4) Załadowanie obrazów do Minikube
+```bash
+minikube image load training-app-api:latest
+minikube image load training-app-frontend:latest
+```
+
+### 5) Wdrożenie
+```bash
+kubectl apply -f k8s/
+kubectl get pods
+kubectl get svc
+```
+
+### 6) Uzycie docker Minikube 
+```bash
+minikube service frontend --url
+```
