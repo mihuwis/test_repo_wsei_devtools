@@ -17,4 +17,5 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build images with Docker Compose
+        working-directory: training-app
         run: docker compose build
