@@ -69,3 +69,4 @@ curl http://localhost:8081/api/health
 Sprawdzenie licznika 
 curl http://localhost:8081/api/stats
 
+Ta linia jest dodana zeby przetestować git hub actions 
